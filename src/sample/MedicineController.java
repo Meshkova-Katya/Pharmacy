@@ -6,13 +6,14 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 
 public class MedicineController {
-    public static int temp = 1;
+
     @FXML
     private ResourceBundle resources;
 
@@ -24,12 +25,6 @@ public class MedicineController {
 
     @FXML
     private Button add;
-
-    @FXML
-    private TextField tx3;
-
-    @FXML
-    private TextField tx2;
 
     @FXML
     private Button quantity;
@@ -45,54 +40,68 @@ public class MedicineController {
         DatabaseHandler dbHandler = new DatabaseHandler();
 
 
-        String add_medicine = tx1.getText().trim();
+        String name = tx1.getText().trim();
 
+        if (!name.equals("")) {
+            Medicine med = dbHandler.getMedByName(name);
 
-        if (!add_medicine.equals("")) {
-            Medicine medicine = new Medicine(add_medicine, temp);
-            try {
-                dbHandler.add(medicine);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+            if (med != null) {
 
-            String st = DatabaseHandler.MEDICINE.getAdd_medicine();
-            if (add_medicine == st) {
-                DatabaseHandler.MEDICINE.setQuantity(temp++);
+                try {
 
+                    med.setQuantity(med.getQuantity() + 1);
+                    dbHandler.izm(med);
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
             } else {
-                String str = "Заполните все поля!";
-                System.out.println(str);
+
+                Medicine medicine = new Medicine();
+                medicine.setName(name);
+                medicine.setQuantity(1);
+                try {
+                    dbHandler.add(medicine);
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
             }
-
-
+        } else {
+           errorHandling();
         }
     }
 
+
     private void delMedicine() {
+
 
         DatabaseHandler dbHandler = new DatabaseHandler();
 
-        int temp = DatabaseHandler.MEDICINE.getQuantity();
 
-        String market = tx2.getText().trim();
+        String market = tx1.getText().trim();
 
         if (!market.equals("")) {
-
-            Medicine medicine = new Medicine(market, temp--);
-
-
-            try {
-
-                dbHandler.del(medicine);
-
-                medicine.setQuantity(DatabaseHandler.MEDICINE.getQuantity());
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            Medicine medicine = dbHandler.getMedByName(market);
+            if (medicine == null) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Ошибка");
+                alert.setHeaderText("Такого препарата нет в БД");
+                alert.showAndWait();
+            } else if (medicine.getQuantity() == 1) {
+                try {
+                    dbHandler.del(medicine.getName());
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            } else {
+                medicine.setQuantity(medicine.getQuantity() - 1);
+                try {
+                    dbHandler.izm(medicine);
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
             }
         } else {
-            String str = "Заполните все поля!";
-            System.out.println(str);
+           errorHandling();
         }
 
 
@@ -102,6 +111,31 @@ public class MedicineController {
     void initialize() {
         add.setOnAction(event -> addMedicine());
         sell.setOnAction(event -> delMedicine());
+        quantity.setOnAction(event -> findQuantity());
+
     }
 
+    private void findQuantity() {
+        String name = tx1.getText().trim();
+        if (!name.equals("")) {
+            DatabaseHandler dbHandler = new DatabaseHandler();
+            Medicine med = dbHandler.getMedByName(name);
+            quantity2.setVisible(true);
+            if (med != null) {
+                med.setQuantity(0);
+
+            }
+            quantity2.setText("Кол-во лекарств на складе:" + med.getQuantity());
+
+        } else {
+           errorHandling();
+        }
+    }
+    private void errorHandling(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Ошибка");
+        alert.setHeaderText("Заполните все поля!");
+        alert.showAndWait();
+
+    }
 }

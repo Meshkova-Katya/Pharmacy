@@ -1,30 +1,40 @@
 package sample;
 
 public class Medicine {
-
-    private String add_medicine;
+    private int id;
+    private String name;
     private int quantity;
 
-    public Medicine(String add_medicine, int quantity) {
-        this.add_medicine = add_medicine;
+    public Medicine(int id, String name, int quantity) {
+        this.id = id;
+        this.name = name;
         this.quantity = quantity;
     }
 
-    public String getAdd_medicine() {
-        return add_medicine;
+    public Medicine() {
     }
 
-    public void setAdd_medicine(String add_medicine) {
-        this.add_medicine = add_medicine;
+    public int getId() {
+        return id;
     }
 
-
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getQuantity() {
         return quantity;
     }
 
-    public int setQuantity(int quantity) {
-        return quantity;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
