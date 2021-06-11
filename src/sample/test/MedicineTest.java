@@ -1,7 +1,8 @@
-package sample;
+package sample.test;
 
 import org.junit.Before;
 import org.junit.Test;
+import sample.Medicine;
 
 import static org.junit.Assert.*;
 

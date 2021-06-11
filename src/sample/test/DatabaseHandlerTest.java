@@ -1,4 +1,4 @@
-package test;
+package sample.test;
 
 import org.junit.Ignore;
 import sample.DatabaseHandler;

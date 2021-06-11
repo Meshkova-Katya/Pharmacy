@@ -22,7 +22,7 @@
       <Button fx:id="add" layoutX="240.0" layoutY="271.0" mnemonicParsing="false" text="Добавить на склад" />
       <Button fx:id="sell" layoutX="240.0" layoutY="336.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="119.0" text="Продать" />
       <Button fx:id="quantity" layoutX="237.0" layoutY="399.0" mnemonicParsing="false" text="Узнать колличество" />
-      <Label fx:id="quantity2" layoutX="133.0" layoutY="470.0" prefHeight="44.0" prefWidth="432.0" text="Кол-во лекарств на складе:" textAlignment="CENTER" visible="false">
+      <Label fx:id="quantity2" layoutX="192.0" layoutY="472.0" prefHeight="44.0" prefWidth="294.0" text="Кол-во лекарств на складе:" textAlignment="CENTER" visible="false">
          <font>
             <Font name="Dubai Regular" size="18.0" />
          </font>

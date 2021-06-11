@@ -121,11 +121,12 @@ public class MedicineController {
             DatabaseHandler dbHandler = new DatabaseHandler();
             Medicine med = dbHandler.getMedByName(name);
             quantity2.setVisible(true);
-            if (med != null) {
+            if (med == null) {
                 med.setQuantity(0);
 
             }
-            quantity2.setText("Кол-во лекарств на складе:" + med.getQuantity());
+            System.out.println(name);
+            quantity2.setText("Кол-во лекарств на складе: " + med.getQuantity());
 
         } else {
            errorHandling();
