@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: #00FA9A;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.SalesStatisticsController">
+    <children>
+        <Label layoutX="214.0" layoutY="45.0" text="Добрый Доктор">
+            <font>
+                <Font name="Dubai Regular" size="24.0" />
+            </font>
+        </Label>
+      <Label fx:id="statistics" alignment="TOP_LEFT" layoutX="31.0" layoutY="98.0" prefHeight="446.0" prefWidth="538.0" wrapText="true">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+
+    </children>
+</AnchorPane>

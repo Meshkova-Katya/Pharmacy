@@ -1,15 +1,20 @@
 package sample;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 
 public class MedicineController {
@@ -34,6 +39,10 @@ public class MedicineController {
 
     @FXML
     private Label quantity2;
+
+    @FXML
+    private Button statistics;
+
 
     private void addMedicine() {
 
@@ -66,7 +75,7 @@ public class MedicineController {
                 }
             }
         } else {
-           errorHandling();
+            errorHandling();
         }
     }
 
@@ -101,7 +110,7 @@ public class MedicineController {
                 }
             }
         } else {
-           errorHandling();
+            errorHandling();
         }
 
 
@@ -112,6 +121,7 @@ public class MedicineController {
         add.setOnAction(event -> addMedicine());
         sell.setOnAction(event -> delMedicine());
         quantity.setOnAction(event -> findQuantity());
+        statistics.setOnAction(event -> showWindow());
 
     }
 
@@ -119,24 +129,48 @@ public class MedicineController {
         String name = tx1.getText().trim();
         if (!name.equals("")) {
             DatabaseHandler dbHandler = new DatabaseHandler();
+
             Medicine med = dbHandler.getMedByName(name);
+
             quantity2.setVisible(true);
             if (med == null) {
-                med.setQuantity(0);
-
+                quantity2.setText("Кол-во лекарств на складе: " + 0);
+            } else {
+                quantity2.setText("Кол-во лекарств на складе: " + med.getQuantity());
             }
+
             System.out.println(name);
-            quantity2.setText("Кол-во лекарств на складе: " + med.getQuantity());
+
 
         } else {
-           errorHandling();
+            errorHandling();
         }
     }
-    private void errorHandling(){
+
+    private void errorHandling() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Ошибка");
         alert.setHeaderText("Заполните все поля!");
         alert.showAndWait();
+
+    }
+
+    private void showWindow() {
+        statistics.getScene().getWindow().hide(); // закрытие текущего окна
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("SalesStatistics.fxml"));
+
+        try {
+            loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Parent root = loader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root, 600, 600));
+        stage.showAndWait(); // чтобы подождал
 
     }
 }
