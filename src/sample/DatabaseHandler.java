@@ -169,24 +169,7 @@ public class DatabaseHandler extends Configs {
         return medicine;
     }
 
-    public static String findOutStatistics() {
-        String str = "";
-        try {
-            PreparedStatement stmt = dbConnection.prepareStatement("select id, name, quantity from medicine");
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                int id = rs.getInt(1);
-                String name = rs.getString(2);
-                int quantity = rs.getInt(3);
-                str = "id: " + id + " name: " + name + " quantity: " + quantity + "\n" + str;
 
-            }
-        } catch (SQLException sqlException) {
-            sqlException.printStackTrace();
-        }
-
-        return str;
-    }
 
     private void dialogInfo() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

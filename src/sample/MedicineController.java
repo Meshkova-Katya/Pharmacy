@@ -121,7 +121,7 @@ public class MedicineController {
         add.setOnAction(event -> addMedicine());
         sell.setOnAction(event -> delMedicine());
         quantity.setOnAction(event -> findQuantity());
-        statistics.setOnAction(event -> showWindow());
+
 
     }
 
@@ -155,22 +155,4 @@ public class MedicineController {
 
     }
 
-    private void showWindow() {
-        statistics.getScene().getWindow().hide(); // закрытие текущего окна
-
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("SalesStatistics.fxml"));
-
-        try {
-            loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Parent root = loader.getRoot();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root, 600, 600));
-        stage.showAndWait(); // чтобы подождал
-
-    }
 }
